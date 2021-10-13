@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ConventionRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ConventionRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ConventionRepository::class)
@@ -16,26 +17,31 @@ class Convention
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"etudiant:read", "convention:read", "attestation:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"etudiant:read", "convention:read", "attestation:read"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"etudiant:read", "convention:read", "attestation:read"})
      */
     private $nbHeur;
 
     /**
      * @ORM\OneToMany(targetEntity=Etudiant::class, mappedBy="convention")
+     * @Groups("convention:read")
      */
     private $etudiant;
 
     /**
      * @ORM\OneToOne(targetEntity=Attestation::class, mappedBy="convention", cascade={"persist", "remove"})
+     * @Groups("convention:read")
      */
     private $attestation;
 

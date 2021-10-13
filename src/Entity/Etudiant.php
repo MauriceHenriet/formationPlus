@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\EtudiantRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\EtudiantRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=EtudiantRepository::class)
@@ -14,31 +15,37 @@ class Etudiant
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"etudiant:read", "convention:read", "attestation:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"etudiant:read", "convention:read", "attestation:read"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"etudiant:read", "convention:read", "attestation:read"})
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"etudiant:read", "convention:read", "attestation:read"})
      */
     private $mail;
 
     /**
      * @ORM\ManyToOne(targetEntity=Convention::class, inversedBy="etudiant")
+     * @Groups("etudiant:read")
      */
     private $convention;
 
     /**
      * @ORM\OneToOne(targetEntity=Attestation::class, mappedBy="etudiant", cascade={"persist", "remove"})
+     * @Groups("etudiant:read")
      */
     private $attestation;
 
