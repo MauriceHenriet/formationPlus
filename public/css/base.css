@@ -1,0 +1,17 @@
+.container div {
+  padding: 20px;
+}
+.form input,
+select {
+  width: 100%;
+  padding: 2px;
+}
+.form input,
+textarea {
+  width: 100%;
+  padding: 2px;
+  height: 13em;
+}
+.blockPointerEvent {
+  pointer-events: none;
+}

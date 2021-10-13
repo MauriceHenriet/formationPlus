@@ -1,0 +1,58 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Générer Attestation{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <div class="card-header"> 
+            <h1>Générer une Attestation</h1>
+        </div>
+
+        <div class="card">
+            {{ form_start(formAttestation) }}
+
+            {{ form_widget(formAttestation) }}
+                <button class="btn btn-primary">Générer l'Attestation</button>
+            {{ form_end(formAttestation) }}
+        </div>
+        <p>Lorsqu'une attestation est générée pour un étudiant, alors cet étudiant ne sera plus dans la liste des étudiants pour qui il faut générer l'attestation</p>
+
+    </div>
+
+     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        $("#attestation_convention").addClass("blockPointerEvent");
+        
+        let message = document.getElementById('attestation_message');
+        message.value = '';
+        
+        let convention_sel = document.getElementById('attestation_convention');
+        convention_sel.setAttribute('readonly', true);
+
+        let etudiant_sel = document.getElementById('attestation_etudiant');
+
+        etudiant_sel.onchange = function(){
+            const url = 'https://localhost:8000/get_convention_id/'+ etudiant_sel.value;
+
+            axios.get(url).then(function(response){
+  
+                let options = convention_sel.getElementsByTagName('option')
+
+                for (let item of options){
+                    if(item.value == response.data.conventionId)
+                        convention_sel.value = response.data.conventionId;
+                        message.value = 'Bonjour '+response.data.etudiant
+                            + ', \n\rVous avez suivi '+response.data.nbHeur+'heures de formation chez FormationPlus.'
+                            + '\n\rPourriez-vous nous retourner ce mail avec la pièce jointe signée.'
+                            + '\n\rCordialement, FormationPlus'
+                }
+            });
+
+            
+        }
+    </script>
+
+
+{% endblock %}

@@ -19,6 +19,26 @@ class EtudiantRepository extends ServiceEntityRepository
         parent::__construct($registry, Etudiant::class);
     }
 
+//SELECT * FROM etudiant LEFT OUTER JOIN attestation ON attestation.etudiant_id = etudiant.id WHERE attestation.id IS NULL;
+
+
+public function findEtudiantsByNoAttestation()
+{
+        return $this->createQueryBuilder('e')
+        ->select('e', 'a')
+        ->leftJoin('e.attestation', 'a')
+        ->where('a.id IS NULL')
+        ->getQuery()
+        ->getResult()
+        ;
+
+        // $db = $this->getEntityManager()->getConnection();
+        // $query = $db->prepare("SELECT * FROM etudiant LEFT OUTER JOIN attestation ON attestation.etudiant_id = etudiant.id WHERE attestation.id IS NULL");
+        // return $query->executeQuery()->fetchAllAssociative();
+        
+
+    }
+
     // /**
     //  * @return Etudiant[] Returns an array of Etudiant objects
     //  */

@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Etudiant;
 use App\Entity\Convention;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Convention|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,7 +19,7 @@ class ConventionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Convention::class);
     }
-
+    
     // /**
     //  * @return Convention[] Returns an array of Convention objects
     //  */
